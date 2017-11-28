@@ -9,14 +9,24 @@
 import UIKit
 
 class PreviewViewController: UIViewController {
-
+    
+    var image: UIImage?
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let image = self.image {
+            imageView.image = image
+        }
 
         // Do any additional setup after loading the view.
     }
+    
     @IBAction func cancelButtonTouchUpInside(_ sender: UIButton) {
-        
+        self.dismiss(animated: true) {
+            
+        }
     }
     
     @IBAction func saveButtonTouchUpInside(_ sender: Any) {

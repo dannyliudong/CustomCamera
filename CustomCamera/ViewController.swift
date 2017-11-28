@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     var photoOutput: AVCapturePhotoOutput?
     
     var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
+    
+    var image: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +56,11 @@ class ViewController: UIViewController {
         do {
             let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
             captureSession.addInput(captureDeviceInput)
+            
+            photoOutput = AVCapturePhotoOutput()
             photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format:[AVVideoCodecKey:AVVideoCodecType.jpeg])], completionHandler: nil)
+            
+            captureSession.addOutput(photoOutput!)
             
         } catch {
             print(error.localizedDescription)
@@ -75,14 +81,28 @@ class ViewController: UIViewController {
     }
     
     @IBAction func cameraButtonTouchUpInside(_ sender: Any) {
-        performSegue(withIdentifier: "ShowPhotoSegue", sender: nil)
+//        performSegue(withIdentifier: "ShowPhotoSegue", sender: nil)
+        let settings = AVCapturePhotoSettings()
+        photoOutput?.capturePhoto(with: settings, delegate: self)
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowPhotoSegue" {
+            let previewVC = segue.destination as! PreviewViewController
+            previewVC.image = self.image
+        }
     }
+}
 
-
+extension ViewController: AVCapturePhotoCaptureDelegate {
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        if let imageData = photo.fileDataRepresentation() {
+//            print(imageData)
+            image = UIImage(data: imageData)
+            performSegue(withIdentifier: "ShowPhotoSegue", sender: nil)
+        }
+    }
 }
 

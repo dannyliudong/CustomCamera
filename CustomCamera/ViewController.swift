@@ -12,7 +12,36 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        setupCaptureSession()
+        setupDevice()
+        setupInputOutput()
+        setupPreviewLayer()
+        startRunningCaptureSession()
+    }
+    
+    func setupCaptureSession() {
+        
+    }
+    
+    func setupDevice() {
+        
+    }
+    
+    func setupInputOutput(){
+        
+    }
+    
+    func setupPreviewLayer(){
+        
+    }
+    
+    func startRunningCaptureSession() {
+        
+    }
+    
+    @IBAction func cameraButtonTouchUpInside(_ sender: Any) {
+        performSegue(withIdentifier: "ShowPhotoSegue", sender: nil)
     }
 
     override func didReceiveMemoryWarning() {

@@ -12,6 +12,7 @@
 		A03E78081FCBF379003457DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A03E78061FCBF379003457DF /* Main.storyboard */; };
 		A03E780A1FCBF379003457DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A03E78091FCBF379003457DF /* Assets.xcassets */; };
 		A03E780D1FCBF379003457DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A03E780B1FCBF379003457DF /* LaunchScreen.storyboard */; };
+		A09B32121FCC1872009027DC /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09B32111FCC1872009027DC /* PreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		A03E78091FCBF379003457DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A03E780C1FCBF379003457DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A03E780E1FCBF379003457DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A09B32111FCC1872009027DC /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				A03E78021FCBF379003457DF /* AppDelegate.swift */,
 				A03E78041FCBF379003457DF /* ViewController.swift */,
+				A09B32111FCC1872009027DC /* PreviewViewController.swift */,
 				A03E78061FCBF379003457DF /* Main.storyboard */,
 				A03E78091FCBF379003457DF /* Assets.xcassets */,
 				A03E780B1FCBF379003457DF /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			files = (
 				A03E78051FCBF379003457DF /* ViewController.swift in Sources */,
 				A03E78031FCBF379003457DF /* AppDelegate.swift in Sources */,
+				A09B32121FCC1872009027DC /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

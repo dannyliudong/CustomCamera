@@ -93,7 +93,64 @@ class ViewController: UIViewController {
     
     // 对焦
     @objc func foucus(sender: UITapGestureRecognizer) {
-        print("tap screen")
+        
+        let location = sender.location(in: self.view)
+        
+        print(location)
+        
+
+        
+        
+        if let camera = currentCamera {
+            do {
+                try camera.lockForConfiguration()
+                camera.focusPointOfInterest = location
+                camera.focusMode = AVCaptureDevice.FocusMode.autoFocus
+                camera.exposurePointOfInterest = location
+                camera.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
+                camera.unlockForConfiguration()
+
+                self.focusUI(location: location)
+
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        
+       
+    }
+    
+    var focusView : UIView?
+    // 焦点UI动画
+    func focusUI(location: CGPoint) {
+        
+        print("focusing")
+        
+        focusView = UIView(frame: CGRect(x: location.x, y: location.y, width: 20, height: 20))
+        focusView?.backgroundColor = UIColor.white
+        self.view.addSubview(focusView!)
+        
+        
+//        let focalReticule = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+//        focalReticule.backgroundColor = UIColor.clear
+//
+//        let line1 = UIView(frame: CGRect(x: 0, y: 29.5, width: 60, height: 1))
+//        line1.backgroundColor = UIColor.white
+//        focalReticule.addSubview(line1)
+//
+//        let line2 = UIView(frame: CGRect(x: 29.5, y: 0, width: 1, height: 60))
+//        line2.backgroundColor = UIColor.white
+//        focalReticule.addSubview(line2)
+        
+        
+//        focalReticule.isHidden = true
+        
+        UIView.animate(withDuration: 1, animations: {
+            self.focusView?.isHidden = false
+        }) { (ok) in
+            self.focusView?.isHidden = true
+        }
     }
     
     
@@ -103,14 +160,13 @@ class ViewController: UIViewController {
         photoOutput?.capturePhoto(with: settings, delegate: self)
     }
     
-
-    
     @IBAction func cameraButtonTouchUpInside(_ sender: Any) {
 //        performSegue(withIdentifier: "ShowPhotoSegue", sender: nil)
         let settings = AVCapturePhotoSettings()
         photoOutput?.capturePhoto(with: settings, delegate: self)
         
     }
+    
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowPhotoSegue" {

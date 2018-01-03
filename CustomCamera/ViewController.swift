@@ -44,12 +44,12 @@ class ViewController: UIViewController {
         for device in devices {
             if device.position == AVCaptureDevice.Position.back {
                 backCamera = device
+                
             } else if device.position == AVCaptureDevice.Position.front{
                 frontCamera = device
             }
         }
         currentCamera = backCamera
-        
     }
     
     func setupInputOutput(){
@@ -69,11 +69,16 @@ class ViewController: UIViewController {
     
     func setupPreviewLayer(){
         cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        cameraPreviewLayer?.videoGravity = .resizeAspectFill
+        cameraPreviewLayer?.videoGravity = .resizeAspect
         cameraPreviewLayer?.connection?.videoOrientation = .portrait
         cameraPreviewLayer?.frame = self.view.frame
         self.view.layer.insertSublayer(cameraPreviewLayer!, at: 0)
-        
+    }
+    
+    func takePicture() {
+        let settings = AVCapturePhotoSettings()
+        settings.flashMode = .auto
+        photoOutput?.capturePhoto(with: settings, delegate: self)
     }
     
     func startRunningCaptureSession() {
@@ -104,5 +109,19 @@ extension ViewController: AVCapturePhotoCaptureDelegate {
             performSegue(withIdentifier: "ShowPhotoSegue", sender: nil)
         }
     }
+    //    Use -captureOutput:didFinishProcessingPhoto:error: instead.
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,6 +25,9 @@
                                     <constraint firstAttribute="width" constant="60" id="W9o-fO-JXr"/>
                                     <constraint firstAttribute="height" constant="60" id="fve-g8-fqE"/>
                                 </constraints>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="30"/>
@@ -34,10 +37,42 @@
                                     <action selector="cameraButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Qt-Tf-gFi"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vH-V9-4VD">
+                                <rect key="frame" x="165" y="20" width="45" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="ZGD-4X-au9"/>
+                                    <constraint firstAttribute="height" constant="45" id="iPk-aO-puk"/>
+                                </constraints>
+                                <state key="normal" title="滤镜">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRW-0s-UlM">
+                                <rect key="frame" x="313" y="594" width="46" height="46"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="9Qr-aT-Pcc"/>
+                                    <constraint firstAttribute="height" constant="46" id="eO9-Q7-RT1"/>
+                                </constraints>
+                                <state key="normal" title="翻转">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="6vH-V9-4VD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="5Qq-Vf-8cV"/>
+                            <constraint firstItem="6vH-V9-4VD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="165" id="Kys-QK-NAx"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="29Y-VB-zEp" secondAttribute="bottom" constant="20" id="RYr-gN-Wva"/>
+                            <constraint firstItem="ZRW-0s-UlM" firstAttribute="leading" secondItem="29Y-VB-zEp" secondAttribute="trailing" constant="96" id="TKd-EF-ltE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6vH-V9-4VD" secondAttribute="trailing" constant="165" id="g15-mH-205"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ZRW-0s-UlM" secondAttribute="bottom" constant="27" id="pnD-YD-ILu"/>
                             <constraint firstItem="29Y-VB-zEp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ub6-QV-2t7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -48,7 +83,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-334" y="86"/>
+            <point key="canvasLocation" x="-1031" y="-162"/>
         </scene>
         <!--Preview View Controller-->
         <scene sceneID="oUF-NF-d7V">
@@ -58,46 +93,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="krO-rM-imD">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="krO-rM-imD">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPR-GY-Lxz">
-                                <rect key="frame" x="20" y="40" width="48" height="30"/>
+                                <rect key="frame" x="20" y="40" width="60" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="48" id="IzM-jm-33c"/>
-                                    <constraint firstAttribute="height" constant="30" id="ZtO-li-88L"/>
+                                    <constraint firstAttribute="width" constant="60" id="IzM-jm-33c"/>
+                                    <constraint firstAttribute="height" constant="40" id="ZtO-li-88L"/>
                                 </constraints>
                                 <state key="normal" title="Cancel">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="cancelButtonTouchUpInside:" destination="AA2-qj-X26" eventType="touchUpInside" id="Bdv-RO-WXb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSM-qs-wD1">
-                                <rect key="frame" x="307" y="40" width="48" height="30"/>
+                                <rect key="frame" x="295" y="40" width="60" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Th8-0c-LCi"/>
-                                    <constraint firstAttribute="width" constant="48" id="kYx-8y-wyv"/>
+                                    <constraint firstAttribute="height" constant="40" id="Th8-0c-LCi"/>
+                                    <constraint firstAttribute="width" constant="60" id="kYx-8y-wyv"/>
                                 </constraints>
                                 <state key="normal" title="Save">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="saveButtonTouchUpInside:" destination="AA2-qj-X26" eventType="touchUpInside" id="mCN-Gy-y2z"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ToS-KL-7uq" firstAttribute="trailing" secondItem="aSM-qs-wD1" secondAttribute="trailing" constant="20" id="8vV-0h-ioJ"/>
                             <constraint firstItem="iPR-GY-Lxz" firstAttribute="top" secondItem="ToS-KL-7uq" secondAttribute="top" constant="20" id="Q5c-zn-Yib"/>
-                            <constraint firstItem="krO-rM-imD" firstAttribute="trailing" secondItem="ToS-KL-7uq" secondAttribute="trailing" id="R9D-aC-Fcw"/>
+                            <constraint firstItem="krO-rM-imD" firstAttribute="trailing" secondItem="jaR-M1-uLZ" secondAttribute="trailing" id="R9D-aC-Fcw"/>
                             <constraint firstItem="iPR-GY-Lxz" firstAttribute="leading" secondItem="ToS-KL-7uq" secondAttribute="leading" constant="20" id="RdL-5Q-aeC"/>
-                            <constraint firstItem="krO-rM-imD" firstAttribute="bottom" secondItem="ToS-KL-7uq" secondAttribute="bottom" id="gQq-hX-jHM"/>
+                            <constraint firstItem="krO-rM-imD" firstAttribute="bottom" secondItem="jaR-M1-uLZ" secondAttribute="bottom" id="gQq-hX-jHM"/>
                             <constraint firstItem="krO-rM-imD" firstAttribute="top" secondItem="jaR-M1-uLZ" secondAttribute="top" id="giA-1A-nqX"/>
                             <constraint firstItem="aSM-qs-wD1" firstAttribute="top" secondItem="ToS-KL-7uq" secondAttribute="top" constant="20" id="r4r-vp-Qkq"/>
-                            <constraint firstItem="krO-rM-imD" firstAttribute="leading" secondItem="ToS-KL-7uq" secondAttribute="leading" id="sO8-5q-tDr"/>
+                            <constraint firstItem="krO-rM-imD" firstAttribute="leading" secondItem="jaR-M1-uLZ" secondAttribute="leading" id="sO8-5q-tDr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ToS-KL-7uq"/>
                     </view>
@@ -107,7 +144,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VKm-ks-R2I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="532" y="85.907046476761622"/>
+            <point key="canvasLocation" x="-287" y="-162"/>
         </scene>
     </scenes>
 </document>

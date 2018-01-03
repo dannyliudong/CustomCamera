@@ -12,6 +12,7 @@
 		A03E78081FCBF379003457DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A03E78061FCBF379003457DF /* Main.storyboard */; };
 		A03E780A1FCBF379003457DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A03E78091FCBF379003457DF /* Assets.xcassets */; };
 		A03E780D1FCBF379003457DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A03E780B1FCBF379003457DF /* LaunchScreen.storyboard */; };
+		A08DD39D1FFCBD3600443C32 /* CustomCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A08DD39C1FFCBD3600443C32 /* CustomCameraViewController.m */; };
 		A09B32121FCC1872009027DC /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09B32111FCC1872009027DC /* PreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,9 @@
 		A03E78091FCBF379003457DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A03E780C1FCBF379003457DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A03E780E1FCBF379003457DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A08DD3981FFCBD0700443C32 /* CustomCamera-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CustomCamera-Bridging-Header.h"; sourceTree = "<group>"; };
+		A08DD39B1FFCBD3600443C32 /* CustomCameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCameraViewController.h; sourceTree = "<group>"; };
+		A08DD39C1FFCBD3600443C32 /* CustomCameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCameraViewController.m; sourceTree = "<group>"; };
 		A09B32111FCC1872009027DC /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,10 +63,13 @@
 				A03E78021FCBF379003457DF /* AppDelegate.swift */,
 				A03E78041FCBF379003457DF /* ViewController.swift */,
 				A09B32111FCC1872009027DC /* PreviewViewController.swift */,
+				A08DD39B1FFCBD3600443C32 /* CustomCameraViewController.h */,
+				A08DD39C1FFCBD3600443C32 /* CustomCameraViewController.m */,
 				A03E78061FCBF379003457DF /* Main.storyboard */,
 				A03E78091FCBF379003457DF /* Assets.xcassets */,
 				A03E780B1FCBF379003457DF /* LaunchScreen.storyboard */,
 				A03E780E1FCBF379003457DF /* Info.plist */,
+				A08DD3981FFCBD0700443C32 /* CustomCamera-Bridging-Header.h */,
 			);
 			path = CustomCamera;
 			sourceTree = "<group>";
@@ -99,6 +106,7 @@
 				TargetAttributes = {
 					A03E77FE1FCBF379003457DF = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -141,6 +149,7 @@
 			files = (
 				A03E78051FCBF379003457DF /* ViewController.swift in Sources */,
 				A03E78031FCBF379003457DF /* AppDelegate.swift in Sources */,
+				A08DD39D1FFCBD3600443C32 /* CustomCameraViewController.m in Sources */,
 				A09B32121FCC1872009027DC /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,12 +287,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QK9335G8AK;
 				INFOPLIST_FILE = CustomCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.liudong.CustomCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CustomCamera/CustomCamera-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -293,12 +305,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QK9335G8AK;
 				INFOPLIST_FILE = CustomCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.liudong.CustomCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CustomCamera/CustomCamera-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

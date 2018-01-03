@@ -31,12 +31,14 @@ class ViewController: UIViewController {
         setupInputOutput()
         setupPreviewLayer()
         startRunningCaptureSession()
+        tapGestrue()
     }
-    
+    // setp 1
     func setupCaptureSession() {
         captureSession.sessionPreset = AVCaptureSession.Preset.photo
     }
     
+    // setp 2
     func setupDevice() {
         let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
         let devices = deviceDiscoverySession.devices
@@ -52,6 +54,7 @@ class ViewController: UIViewController {
         currentCamera = backCamera
     }
     
+    // setp 3
     func setupInputOutput(){
         do {
             let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
@@ -67,6 +70,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // setp 4
     func setupPreviewLayer(){
         cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         cameraPreviewLayer?.videoGravity = .resizeAspect
@@ -75,15 +79,31 @@ class ViewController: UIViewController {
         self.view.layer.insertSublayer(cameraPreviewLayer!, at: 0)
     }
     
+    // setp 5
+    func startRunningCaptureSession() {
+        captureSession.startRunning()
+    }
+    
+    // 点击屏幕对焦手势
+    func tapGestrue(){
+        let foucussTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.foucus(sender:)))
+        self.view.addGestureRecognizer(foucussTap)
+    }
+    
+    
+    // 对焦
+    @objc func foucus(sender: UITapGestureRecognizer) {
+        print("tap screen")
+    }
+    
+    
     func takePicture() {
         let settings = AVCapturePhotoSettings()
         settings.flashMode = .auto
         photoOutput?.capturePhoto(with: settings, delegate: self)
     }
     
-    func startRunningCaptureSession() {
-        captureSession.startRunning()
-    }
+
     
     @IBAction func cameraButtonTouchUpInside(_ sender: Any) {
 //        performSegue(withIdentifier: "ShowPhotoSegue", sender: nil)

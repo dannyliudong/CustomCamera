@@ -119,9 +119,6 @@ class CameraViewController: UIViewController {
         
         if let camera = currentCamera {
             var pointOfInterest = CGPoint.zero
-            let frameSize = self.view.bounds.size
-            
-            let point = sender.location(in: self.view)
 
             pointOfInterest = sender.location(in: self.view)//CGPoint(x: point.y / frameSize.height, y: 1.0 - (point.x / frameSize.width))
             

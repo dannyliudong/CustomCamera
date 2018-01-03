@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class CameraViewController: UIViewController {
     
     var captureSession = AVCaptureSession()
     
@@ -86,7 +86,7 @@ class ViewController: UIViewController {
     
     // 点击屏幕对焦手势
     func tapGestrue(){
-        let foucussTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.foucus(sender:)))
+        let foucussTap = UITapGestureRecognizer(target: self, action: #selector(CameraViewController.foucus(sender:)))
         self.view.addGestureRecognizer(foucussTap)
     }
     
@@ -94,23 +94,48 @@ class ViewController: UIViewController {
     // 对焦
     @objc func foucus(sender: UITapGestureRecognizer) {
         
-        let location = sender.location(in: self.view)
         
-        print(location)
-        
-
+//        if let camera = currentCamera {
+//            var pointOfInterest = CGPoint.zero
+//            let frameSize = self.view.bounds.size
+//            let point = sender.location(in: self.view)
+//
+//            pointOfInterest = CGPoint(x: point.y / frameSize.height, y: 1.0 - (point.x / frameSize.width))
+//
+//
+//            if camera.isFocusModeSupported(AVCaptureDevice.FocusMode.autoFocus) {
+//                camera.whiteBalanceMode = AVCaptureWhiteBalanceModeAuto
+//
+//                camera.focusMode = AVCaptureDevice.FocusMode.autoFocus
+//                camera.focusPointOfInterest = pointOfInterest
+//
+//                camera.exposurePointOfInterest = pointOfInterest
+//                camera.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
+//
+//                camera.unlockForConfiguration()
+//            }
+//        }
         
         
         if let camera = currentCamera {
+            var pointOfInterest = CGPoint.zero
+            let frameSize = self.view.bounds.size
+            
+            let point = sender.location(in: self.view)
+
+            pointOfInterest = sender.location(in: self.view)//CGPoint(x: point.y / frameSize.height, y: 1.0 - (point.x / frameSize.width))
+            
+            print(pointOfInterest)
+            
             do {
                 try camera.lockForConfiguration()
-                camera.focusPointOfInterest = location
+                camera.focusPointOfInterest = pointOfInterest
                 camera.focusMode = AVCaptureDevice.FocusMode.autoFocus
-                camera.exposurePointOfInterest = location
+                camera.exposurePointOfInterest = pointOfInterest
                 camera.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
                 camera.unlockForConfiguration()
 
-                self.focusUI(location: location)
+//                self.focusUI(location: location)
 
             } catch {
                 print(error.localizedDescription)
@@ -176,7 +201,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: AVCapturePhotoCaptureDelegate {
+extension CameraViewController: AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation() {

@@ -23,6 +23,8 @@ class CameraViewController: UIViewController {
     
     var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
     
+    var focalUI: UIView?
+    
     var image: UIImage?
 
     override func viewDidLoad() {
@@ -33,6 +35,8 @@ class CameraViewController: UIViewController {
         setupInputOutput()
         setupPreviewLayer()
         startRunningCaptureSession()
+        
+        createFocusUI()
         tapGestrue()
     }
     // setp 1
@@ -95,6 +99,10 @@ class CameraViewController: UIViewController {
     
     // 对焦
     @objc func foucus(sender: UITapGestureRecognizer) {
+        if captureDeviceInput?.device.position == AVCaptureDevice.Position.front {
+            return
+        }
+        
         if sender.state == .recognized {
             let location = sender.location(in: self.view)
             
@@ -103,12 +111,15 @@ class CameraViewController: UIViewController {
             
             pointOfInterest = CGPoint(x: location.y/frameSize.height, y: 1.0-(location.x/frameSize.width))
             
+            // 对焦
             if let device = currentCamera {
                 if device.isFocusPointOfInterestSupported && device.isFocusModeSupported(AVCaptureDevice.FocusMode.autoFocus) {
                     
                     do {
                         try device.lockForConfiguration()
-                        device.whiteBalanceMode = AVCaptureDevice.WhiteBalanceMode.autoWhiteBalance
+                        if device.isWhiteBalanceModeSupported(AVCaptureDevice.WhiteBalanceMode.autoWhiteBalance) {
+                            device.whiteBalanceMode = AVCaptureDevice.WhiteBalanceMode.autoWhiteBalance
+                        }
                         
                         device.focusMode = AVCaptureDevice.FocusMode.autoFocus
                         device.focusPointOfInterest = pointOfInterest
@@ -126,6 +137,18 @@ class CameraViewController: UIViewController {
                 }
                 
             }
+            
+            // 对焦动画
+            focalUI?.center = location
+            focalUI?.alpha = 0
+            focalUI?.isHidden = false
+            UIView.animate(withDuration: 0.3, animations: {
+                self.focalUI?.alpha = 1
+            }, completion: { (ok) in
+                UIView.animate(withDuration: 1.0, animations: {
+                    self.focalUI?.alpha = 0
+                })
+            })
             
         }
         
@@ -181,34 +204,33 @@ class CameraViewController: UIViewController {
     
     var focusView : UIView?
     // 焦点UI动画
-    func focusUI(location: CGPoint) {
+    func createFocusUI() {
         
         print("focusing")
+
+        focalUI = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        focalUI?.backgroundColor = UIColor.clear
+        self.view.addSubview(focalUI!)
+
+        let line1 = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 1))
+        line1.backgroundColor = UIColor.white
+        focalUI?.addSubview(line1)
+
+        let line2 = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 60))
+        line2.backgroundColor = UIColor.white
+        focalUI?.addSubview(line2)
         
-        focusView = UIView(frame: CGRect(x: location.x, y: location.y, width: 20, height: 20))
-        focusView?.backgroundColor = UIColor.white
-        self.view.addSubview(focusView!)
+        let line3 = UIView(frame: CGRect(x: 0, y: 60, width: 60, height: 1))
+        line3.backgroundColor = UIColor.white
+        focalUI?.addSubview(line3)
         
+        let line4 = UIView(frame: CGRect(x: 60, y: 0, width: 1, height: 60))
+        line4.backgroundColor = UIColor.white
+        focalUI?.addSubview(line4)
         
-//        let focalReticule = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-//        focalReticule.backgroundColor = UIColor.clear
-//
-//        let line1 = UIView(frame: CGRect(x: 0, y: 29.5, width: 60, height: 1))
-//        line1.backgroundColor = UIColor.white
-//        focalReticule.addSubview(line1)
-//
-//        let line2 = UIView(frame: CGRect(x: 29.5, y: 0, width: 1, height: 60))
-//        line2.backgroundColor = UIColor.white
-//        focalReticule.addSubview(line2)
-        
-        
-//        focalReticule.isHidden = true
-        
-        UIView.animate(withDuration: 1, animations: {
-            self.focusView?.isHidden = false
-        }) { (ok) in
-            self.focusView?.isHidden = true
-        }
+
+        focalUI?.isHidden = true
+
     }
     
     // 切换前后摄像头

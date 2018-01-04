@@ -17,6 +17,8 @@ class CameraViewController: UIViewController {
     var frontCamera: AVCaptureDevice?
     var currentCamera: AVCaptureDevice?
     
+    var captureDeviceInput: AVCaptureDeviceInput?
+    
     var photoOutput: AVCapturePhotoOutput?
     
     var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -57,8 +59,8 @@ class CameraViewController: UIViewController {
     // setp 3
     func setupInputOutput(){
         do {
-            let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
-            captureSession.addInput(captureDeviceInput)
+            captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
+            captureSession.addInput(captureDeviceInput!)
             
             photoOutput = AVCapturePhotoOutput()
             photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format:[AVVideoCodecKey:AVVideoCodecType.jpeg])], completionHandler: nil)
@@ -93,6 +95,39 @@ class CameraViewController: UIViewController {
     
     // 对焦
     @objc func foucus(sender: UITapGestureRecognizer) {
+        if sender.state == .recognized {
+            let location = sender.location(in: self.view)
+            
+            var pointOfInterest = CGPoint.zero
+            let frameSize = self.view.bounds.size
+            
+            pointOfInterest = CGPoint(x: location.y/frameSize.height, y: 1.0-(location.x/frameSize.width))
+            
+            if let device = currentCamera {
+                if device.isFocusPointOfInterestSupported && device.isFocusModeSupported(AVCaptureDevice.FocusMode.autoFocus) {
+                    
+                    do {
+                        try device.lockForConfiguration()
+                        device.whiteBalanceMode = AVCaptureDevice.WhiteBalanceMode.autoWhiteBalance
+                        
+                        device.focusMode = AVCaptureDevice.FocusMode.autoFocus
+                        device.focusPointOfInterest = pointOfInterest
+                        
+                        device.exposureMode = AVCaptureDevice.ExposureMode.autoExpose
+                        device.exposurePointOfInterest = pointOfInterest
+                        
+                        device.unlockForConfiguration()
+                        
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    
+                    
+                }
+                
+            }
+            
+        }
         
         
 //        if let camera = currentCamera {
@@ -117,27 +152,28 @@ class CameraViewController: UIViewController {
 //        }
         
         
-        if let camera = currentCamera {
-            var pointOfInterest = CGPoint.zero
-
-            pointOfInterest = sender.location(in: self.view)//CGPoint(x: point.y / frameSize.height, y: 1.0 - (point.x / frameSize.width))
-            
-            print(pointOfInterest)
-            
-            do {
-                try camera.lockForConfiguration()
-                camera.focusPointOfInterest = pointOfInterest
-                camera.focusMode = AVCaptureDevice.FocusMode.autoFocus
-                camera.exposurePointOfInterest = pointOfInterest
-                camera.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
-                camera.unlockForConfiguration()
-
-//                self.focusUI(location: location)
-
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+//        if let camera = currentCamera {
+//            var pointOfInterest = CGPoint.zero
+//
+//            pointOfInterest = sender.location(in: self.view)//CGPoint(x: point.y / frameSize.height, y: 1.0 - (point.x / frameSize.width))
+//
+//            print(pointOfInterest)
+//
+//
+//            do {
+//                try camera.lockForConfiguration()
+//                camera.focusPointOfInterest = pointOfInterest
+//                camera.focusMode = AVCaptureDevice.FocusMode.autoFocus
+//                camera.exposurePointOfInterest = pointOfInterest
+//                camera.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
+//                camera.unlockForConfiguration()
+//
+////                self.focusUI(location: location)
+//
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
         
         
        
@@ -174,6 +210,49 @@ class CameraViewController: UIViewController {
             self.focusView?.isHidden = true
         }
     }
+    
+    // 切换前后摄像头
+    @IBAction func changeCamera(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        
+        let devices = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified).devices
+        if sender.isSelected {
+            for device in devices {
+                if device.position == AVCaptureDevice.Position.front {
+                    frontCamera = device
+                    captureSession.beginConfiguration()
+                    captureSession.removeInput(captureDeviceInput!)
+                    
+                    do {
+                        captureDeviceInput = try AVCaptureDeviceInput(device: frontCamera!)
+                        captureSession.addInput(captureDeviceInput!)
+                        captureSession.commitConfiguration()
+                        
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        } else {
+            for device in devices {
+                if device.position == AVCaptureDevice.Position.back {
+                    backCamera = device
+                    captureSession.beginConfiguration()
+                    captureSession.removeInput(captureDeviceInput!)
+                    
+                    do {
+                        captureDeviceInput = try AVCaptureDeviceInput(device: backCamera!)
+                        captureSession.addInput(captureDeviceInput!)
+                        captureSession.commitConfiguration()
+                        
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+    }
+    
     
     
     func takePicture() {
